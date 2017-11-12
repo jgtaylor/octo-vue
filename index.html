@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Octo Box Management System</title>
+	<meta charset="utf-8">
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	<script src="https://cdn.jsdelivr.net/npm/moment@2.19.2/min/moment.min.js" charset="utf-8"></script>
+	<script type="text/javascript">
+		let WS = new WebSocket("ws://localhost:2801");
+		var app = new Vue({
+			el: "#app",
+			data: {
+				message: "Location Manager Place Holder"
+			}
+		})
+		WS.onopen(() => {
+			WS.send("client registration from web.");
+			WS.send("get locationManager");
+		})
+		WS.onmessage((msg) => {
+			app.message = msg
+		})
+	</script>
+</head>
+
+<body>
+	<div id="app">
+		<p>{{ message }}</p>
+	</div>
+</body>
+
+</html>
