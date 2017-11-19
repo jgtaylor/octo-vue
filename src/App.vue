@@ -1,6 +1,8 @@
 <template>
   <div id="app">
 	  <app-message></app-message>
+	  <app-navigation></app-navigation>
+	  <app-container></app-container>
   </div>
 </template>
 
