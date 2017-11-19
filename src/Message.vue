@@ -10,7 +10,7 @@
 	export default {
 		data() {
 			return {
-				message: "This is a great message"
+				message: "Welcome to the OctoBox!"
 			}
 		},
 		components: {
