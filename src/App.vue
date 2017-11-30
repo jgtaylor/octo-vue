@@ -1,19 +1,22 @@
 <template>
   <div id="app">
-	  <app-message></app-message>
-	  <app-navigation></app-navigation>
-	  <app-container></app-container>
+    <router-view/>
   </div>
 </template>
 
 <script>
 export default {
-  data () {
-    return {
-    }
-  }
+  name: 'app'
 }
 </script>
 
-<style lang="scss">
+<style>
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
 </style>
