@@ -1,6 +1,6 @@
 <template>
 <div class="devices">
-	<h1>Fucking Testing!</h1>
+	<h1>Available Devices</h1>
 	<h3>Devices</h3>
 	<ul>
 		<li v-for="d in devices">
@@ -23,11 +23,11 @@ export default {
 		fetchData() {
 			let that = this;
 			console.log("fetchData() ... WebSocket should follow")
-			that.ws.send( JSON.stringify(["client", {cmd: "register"}]) );
-			that.ws.addEventListener('message', function(event) {
+			this.ws.send( JSON.stringify(["client", {cmd: "register"}]) );
+			this.ws.addEventListener('message', function(event) {
 				let data = JSON.parse(event.data);
 				console.log(data.models);
-				console.log(that.devices)
+				console.log(that.devices);
 				that.devices = data.models;
 			}, { once: true });
 
@@ -44,20 +44,18 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1,
-h2 {
+<style>
+h1,h2 {
 	font-weight: normal;
 }
-
 ul {
-	list-style-type: none;
-	padding: 0;
 }
-
-
-
+li {
+	text-align: left;
+	display: block;
+}
 a {
 	color: #42b983;
+	font-weight: bold;
 }
 </style>

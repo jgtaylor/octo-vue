@@ -8,6 +8,7 @@ let ws = new WebSocket( "ws://localhost:2801/" );
 ws.addEventListener( 'close', function ( event ) {
 	console.log( "WebSocket Closed", event );
 } );
+
 export default new Router( {
 	routes: [ {
 		path: '/',
