@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import Test from '@/components/Test'
+import Home from '@/components/Home'
 import DeviceDetails from '@/components/DeviceDetails'
 
 Vue.use( Router )
@@ -11,24 +10,18 @@ ws.addEventListener( 'close', function ( event ) {
 } );
 export default new Router( {
 	routes: [ {
-			path: '/',
-			name: 'HelloWorld',
-			component: HelloWorld
-		},
-		{
-			path: '/test',
-			name: 'Test',
-			component: Test,
-			meta: {
-				ws: ws
-			}
-		}, {
-			path: '/device/:device',
-			name: 'DeviceDetails',
-			component: DeviceDetails,
-			meta: {
-				ws: ws
-			}
+		path: '/',
+		name: 'Home',
+		component: Home,
+		meta: {
+			ws: ws
 		}
-	]
+	}, {
+		path: '/device/:device',
+		name: 'DeviceDetails',
+		component: DeviceDetails,
+		meta: {
+			ws: ws
+		}
+	} ]
 } )
