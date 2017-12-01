@@ -1,9 +1,9 @@
 <template>
 <div id="app">
-	<router-link :to="{ name: 'zones', params: {} }"></router-link>
-	<router-link :to="{ name: 'devices', params: {} }"></router-link>
-	<router-link :to="{ name: 'schedules', params: {} }"></router-link>
-	<router-link :to="{ name: 'pidcontrollers', params: {} }"></router-link>
+	<router-link :to="{ name: 'zones', params: {} }">Zones</router-link>
+	<router-link :to="{ name: 'devices', params: {} }">Devices</router-link>
+	<router-link :to="{ name: 'schedules', params: {} }">Schedules</router-link>
+	<router-link :to="{ name: 'pidcontrollers', params: {} }">PID Controlers</router-link>
 	<router-view/>
 </div>
 </template>
