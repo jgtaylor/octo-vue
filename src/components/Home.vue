@@ -34,7 +34,11 @@ export default {
 		}
 	},
 	created() {
-		this.fetchData();
+		if (this.ws.readyState === 1) {
+			this.fetchData();
+		} else {
+			this.ws.addEventListener("open", this.fetchData, {once: true})
+		}
 	},
 	watch: {
     	// call again the method if the route changes
