@@ -2,7 +2,7 @@
 	<div class="container">
 		<h1>Devices</h1>
 			<ul>
-				<li v-for="device in devices">{{ device }}</li>
+				<li v-for="device in devices"><router-link :to="{ name: 'deviceDetails', params: {deviceID: device} }">{{ device }}</router-link></li>
 			</ul>
 	</div>
 </template>
@@ -24,9 +24,9 @@ export default {
 			}]));
 			this.ws.addEventListener('message', function(event) {
 				let data = JSON.parse(event.data);
-				console.log(data.models);
-				console.log(that.devices);
 				that.devices = data.models;
+				console.log(that.devices);
+
 			}, {
 				once: true
 			});
