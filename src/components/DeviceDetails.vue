@@ -1,20 +1,14 @@
 <template>
-	<div id="DeviceDetails">
-  		<h1>Device details</h1>
-  		<div v-if="device">
-			<ul>
-				<li>NAME: {{device.device}}</li>
-				<li>TYPE: {{device.type}}</li>
-				<li v-if="device.meta.deviceName">META: {{device.meta.deviceName}}</li>
-				<li v-if="device.meta.name">META: {{device.meta.name}}</li>
-				<li v-if="device.meta.metric">META: {{device.meta.metric}}</li>
-				<li v-if="device.meta.unit">META: {{device.meta.unit}}</li>
-				<li v-if="device.meta.color">META: {{device.meta.color}}</li>
-				<li v-if="device.meta.usage">META: {{device.meta.usage}}</li>
-			</ul>
-		</div>
+<div id="DeviceDetails">
+	<h1>Device details</h1>
+	<div v-if="device">
+		<ul>
+			<li>NAME: {{device.device}}</li>
+			<li>TYPE: {{device.type}}</li>
+			<li v-for="(val, key) in device.meta">{{key}}: {{val}}</li>
+		</ul>
 	</div>
-
+</div>
 </template>
 
 <script>
@@ -28,14 +22,14 @@ export default {
 	},
 	methods: {
 		getDeviceDetails() {
-			let id = this.$route.params.device
-			let ws = this.ws;
+			let id = this.$route.params.deviceID
 			let that = this;
-			ws.send(JSON.stringify(["client", {
+			console.log(this.ws);
+			this.ws.send(JSON.stringify(["client", {
 				cmd: "get",
 				obj: id
 			}]))
-			ws.addEventListener("message", function(e) {
+			this.ws.addEventListener("message", function(e) {
 				if (e.data.message) {
 					console.log(e.data.message);
 					return false;
@@ -60,11 +54,11 @@ export default {
 		// }, this);
 	},
 	watch: {
-    	// call again the method if the route changes
-    	'$route': 'getDeviceDetails'
-  	},
+		// call again the method if the route changes
+		'$route': 'getDeviceDetails'
+	},
 }
 </script>
 
-<style lang="css">
+<style>
 </style>
