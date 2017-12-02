@@ -5,6 +5,7 @@ import Zones from '@/components/Zones'
 import Devices from '@/components/Devices'
 import Schedules from '@/components/Schedules'
 import PidControlers from '@/components/PidControlers'
+import DeviceDetails from '@/components/DeviceDetails'
 
 Vue.use( Router )
 let ws = new WebSocket( "ws://localhost:2801/" );
@@ -14,6 +15,13 @@ ws.addEventListener( 'close', function ( event ) {
 
 export default new Router( {
 	routes: [ {
+		path: '/',
+		name: 'homeShort',
+		component: Home,
+		meta: {
+			ws: ws
+		}
+	}, {
 		path: '',
 		name: 'homeDefault',
 		component: Home,
@@ -23,13 +31,6 @@ export default new Router( {
 	}, {
 		path: '/home',
 		name: 'homeLong',
-		component: Home,
-		meta: {
-			ws: ws
-		}
-	}, {
-		path: '/',
-		name: 'homeShort',
 		component: Home,
 		meta: {
 			ws: ws
@@ -59,6 +60,13 @@ export default new Router( {
 		path: '/pidcontrolers',
 		name: 'pidcontrolers',
 		component: PidControlers,
+		meta: {
+			ws: ws
+		}
+	}, {
+		path: '/device/:deviceID',
+		name: 'deviceDetails',
+		component: DeviceDetails,
 		meta: {
 			ws: ws
 		}
