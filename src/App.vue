@@ -1,17 +1,24 @@
 <template>
 <div id="app">
-	<el-container>
+	<el-container class="main">
 		<el-header>
-			<el-tabs type="border-card" @tab-click="handleClick">
-				<el-tab-pane label="Home" name="home">Home</el-tab-pane>
-				<el-tab-pane label="Zones" name="zones">Zones</el-tab-pane>
-				<el-tab-pane label="Devices" name="devices">Devices</el-tab-pane>
-				<el-tab-pane label="Schedules" name="schedules">Schedules</el-tab-pane>
-				<el-tab-pane label="PIDControlers" name="pidcontrolers">PID Controlers</el-tab-pane>
-			</el-tabs>
+			<el-menu :default-active="activeIndex" mode="horizontal" @select="handleClick" class="nav" :router="true" active-text-color="#F9B9BD" text-color="#A6B0C2" background-color="#314A76">
+				<el-menu-item index="/" route="/">Home</el-menu-item>
+				<el-menu-item index="/zones" route="/zones">Zones</el-menu-item>
+				<el-menu-item index="/devices" route="/devices">Devices</el-menu-item>
+				<el-menu-item index="/schedules" route="/schedules">Schedules</el-menu-item>
+				<el-menu-item index="/pidcontrolers" route="/PidControlers">PidControllers</el-menu-item>
+			</el-menu>
 		</el-header>
 		<el-main>
-			<router-view/>
+			<el-container>
+				<el-main class="panels-o-love">
+					<router-view />
+				</el-main>
+				<el-aside class="aside">
+					<router-view name="aside" />
+				</el-aside>
+			</el-container>
 		</el-main>
 	</el-container>
 </div>
@@ -21,23 +28,16 @@
 export default {
 	name: 'app',
 	data() {
-		console.log("Inside App.vue:data()")
 		return {
-			activeName: 'first'
+			activeIndex: '/'
 		}
 	},
 	methods: {
-		handleClick(tab, event) {
-			console.log("inside App.vue:handleClick()")
-			switch (tab.label) {
-				case "Home":
-					this.$router.push("/")
-					break;
-				default:
-					this.$router.push("/" + tab.label.toLowerCase());
-					break;
-			}
-
+		handleClick(index, indexPath, component) {
+			this.$router.push({
+				path: index
+			})
+			this.activeIndex = index
 		}
 	}
 }
@@ -49,11 +49,28 @@ export default {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	color: #2c3e50;
-	margin-top: 30px;
-	width: 640px;
 }
 
-.link {
-	text-align: center;
+.main {
+	border: 2px double #82BF78;
+}
+.aside {
+	padding: 13px;
+}
+.panels-o-love {
+	background-color: #419334;
+	color: #FFF1D7;
+}
+
+a:active,a:hover,a:visited,a {
+	color: #FFF1D7;
+	text-decoration:  none;
+	font-weight: bold;
+}
+
+
+.nav {
+	font-weight: bold;
+	font-size: 2em;
 }
 </style>
