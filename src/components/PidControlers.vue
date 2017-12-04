@@ -1,5 +1,4 @@
 <template lang="html">
-<h1>PID Controllers</h1>
 </template>
 
 <script>

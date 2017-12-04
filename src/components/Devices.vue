@@ -1,6 +1,5 @@
 <template lang="html">
 	<div class="container">
-		<h1>Devices</h1>
 			<ul>
 				<li v-for="device in devices"><router-link :to="{ name: 'deviceDetails', params: {deviceID: device} }">{{ device }}</router-link></li>
 			</ul>
@@ -49,5 +48,8 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style scoped>
+ul {
+	list-style-type: circle;
+}
 </style>

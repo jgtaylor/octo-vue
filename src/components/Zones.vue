@@ -1,5 +1,4 @@
 <template lang="html">
-<h1>Zones</h1>
 </template>
 
 <script>
