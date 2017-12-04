@@ -6,6 +6,7 @@ import Devices from '@/components/Devices'
 import Schedules from '@/components/Schedules'
 import PidControlers from '@/components/PidControlers'
 import DeviceDetails from '@/components/DeviceDetails'
+import Aside from '@/components/Aside'
 
 Vue.use( Router )
 let ws = new WebSocket( "ws://localhost:2801/" );
@@ -17,56 +18,80 @@ export default new Router( {
 	routes: [ {
 		path: '/',
 		name: 'homeShort',
-		component: Home,
+		components: {
+			default: Home,
+			aside: Aside
+		},
 		meta: {
 			ws: ws
 		}
 	}, {
 		path: '',
 		name: 'homeDefault',
-		component: Home,
+		components: {
+			default: Home,
+			aside: Aside
+		},
 		meta: {
 			ws: ws
 		}
 	}, {
 		path: '/home',
 		name: 'homeLong',
-		component: Home,
+		components: {
+			default: Home,
+			aside: Aside
+		},
 		meta: {
 			ws: ws
 		}
 	}, {
 		path: '/zones',
 		name: 'zones',
-		component: Zones,
+		components: {
+			default: Zones,
+			aside: Aside
+		},
 		meta: {
 			ws: ws
 		}
 	}, {
 		path: '/devices',
 		name: 'devices',
-		component: Devices,
+		components: {
+			default: Devices,
+			aside: Aside
+		},
 		meta: {
 			ws: ws
 		}
 	}, {
 		path: '/schedules',
 		name: 'schedules',
-		component: Schedules,
+		components: {
+			default: Schedules,
+			aside: Aside
+		},
 		meta: {
 			ws: ws
 		}
 	}, {
 		path: '/pidcontrolers',
 		name: 'pidcontrolers',
-		component: PidControlers,
+		components: {
+			default: PidControlers,
+			aside: Aside
+		},
 		meta: {
 			ws: ws
 		}
 	}, {
 		path: '/device/:deviceID',
 		name: 'deviceDetails',
-		component: DeviceDetails,
+		components: {
+			default: DeviceDetails,
+			aside: Aside
+		},
 		meta: {
 			ws: ws
 		}
