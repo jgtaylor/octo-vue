@@ -17,5 +17,6 @@ new Vue( {
 	template: '<App/>',
 	components: {
 		App
-	}
+	},
+	myVar: "A string variable by Josh."
 } )
