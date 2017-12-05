@@ -7,6 +7,7 @@ import Schedules from '@/components/Schedules'
 import PidControlers from '@/components/PidControlers'
 import DeviceDetails from '@/components/DeviceDetails'
 import ZoneDetails from '@/components/ZoneDetails'
+import ScheduleDetails from '@/components/ScheduleDetails'
 import Aside from '@/components/Aside'
 
 Vue.use( Router )
@@ -131,6 +132,16 @@ export default new Router( {
 		name: 'schedules',
 		components: {
 			default: Schedules,
+			aside: Aside
+		},
+		meta: {
+			ws: ws
+		}
+	}, {
+		path: '/schedule/:scheduleID',
+		name: 'scheduleDetails',
+		components: {
+			default: ScheduleDetails,
 			aside: Aside
 		},
 		meta: {
