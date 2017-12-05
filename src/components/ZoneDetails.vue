@@ -25,14 +25,11 @@ export default {
 		let vm = this;
 		if (vm.ws.readyState === 1) {
 			let _zoneDetails = vm.ws.lm.zones.find((z) => {
-				console.log(`${z.name} ?? ${vm.zoneID}`)
 				if (z.name === vm.zoneID) {
 					return z
 				}
 			})
-			console.log(_zoneDetails);
 			vm.zoneDetail = _zoneDetails;
-			console.log(vm.zoneDetail);
 		}
 	},
 }

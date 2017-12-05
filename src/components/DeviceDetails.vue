@@ -1,11 +1,11 @@
 <template>
 <div id="DeviceDetails">
 	<h1>Device details</h1>
-	<div v-if="device">
+	<div v-if="deviceDetail">
 		<ul>
-			<li>NAME: {{device.device}}</li>
-			<li>TYPE: {{device.type}}</li>
-			<li v-for="(val, key) in device.meta">{{key}}: {{val}}</li>
+			<li>NAME: {{deviceDetail.device}}</li>
+			<li>TYPE: {{deviceDetail.type}}</li>
+			<li v-for="(val, key) in deviceDetail.meta">{{key}}: {{val}}</li>
 		</ul>
 	</div>
 </div>
@@ -13,34 +13,24 @@
 
 <script>
 export default {
-	name: 'DeviceDetails',
+	name: 'deviceDetails',
 	data() {
 		return {
-			device: null,
-			ws: this.$route.meta.ws
-		}
-	},
-	methods: {
-		getDeviceDetails() {
-			let id = this.$route.params.deviceID
-			let that = this;
-			console.log(this.ws);
-			this.ws.send(JSON.stringify(["client", {
-				cmd: "get",
-				obj: id
-			}]))
+			deviceID: this.$route.params.deviceID,
+			ws: this.$route.meta.ws,
+			deviceDetail: null
 		}
 	},
 	created() {
 		let vm = this;
-		this.ws.addEventListener('device-detail', function(e) {
-			vm.device = e.detail;
-		})
-		this.getDeviceDetails()
-	},
-	watch: {
-		// call again the method if the route changes
-		'$route': 'getDeviceDetails'
+		if (vm.ws.readyState === 1) {
+			let _deviceDetail = vm.ws.lm.devices.find((d) => {
+				if (d.device === vm.deviceID) {
+					return d
+				}
+			});
+			vm.deviceDetail = _deviceDetail;
+		}
 	},
 }
 </script>
