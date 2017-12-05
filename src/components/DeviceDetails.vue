@@ -29,29 +29,14 @@ export default {
 				cmd: "get",
 				obj: id
 			}]))
-			this.ws.addEventListener("message", function(e) {
-				if (e.data.message) {
-					console.log(e.data.message);
-					return false;
-				}
-				let packet = JSON.parse(e.data);
-				console.log(packet);
-				// packet[0] === "detail", packet[1] === { device: "", type: "", meta: {} }
-				that.device = JSON.parse(packet[1]);
-				console.log(that.device);
-			}, {
-				once: true
-			});
 		}
 	},
 	created() {
+		let vm = this;
+		this.ws.addEventListener('device-detail', function(e) {
+			vm.device = e.detail;
+		})
 		this.getDeviceDetails()
-		// this.ws.addEventListener('message', function(event) {
-		// 	let data = JSON.parse(event.data);
-		// 	console.log(data.models);
-		// 	console.log(this.devices)
-		// 	this.device = data.models;
-		// }, this);
 	},
 	watch: {
 		// call again the method if the route changes
