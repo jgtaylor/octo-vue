@@ -14,36 +14,20 @@ export default {
 			devices: []
 		}
 	},
-	methods: {
-		fetchData() {
-			let that = this;
-			console.log("fetchData() ... WebSocket should follow")
-			this.ws.send(JSON.stringify(["client", {
-				cmd: "register"
-			}]));
-			this.ws.addEventListener('message', function(event) {
-				let data = JSON.parse(event.data);
-				that.devices = data.models;
-				console.log(that.devices);
-
-			}, {
-				once: true
-			});
-
-		}
-	},
 	created() {
-		if (this.ws.readyState === 1) {
-			this.fetchData();
-		} else {
-			this.ws.addEventListener("open", this.fetchData, {
-				once: true
-			});
+		let vm = this;
+		if ( vm.ws.readyState === 1 ) {
+			vm.devices = vm.ws.lm.devices.map(d => d.device );
 		}
-	},
-	watch: {
-		// call again the method if the route changes
-		'$route': 'fetchData'
+		vm.ws.addEventListener("lm-updated", function(e) {
+			vm.devices = e.detail.devices.map(d => d.device);
+			console.log("Devices.vue: created() - event 'lm-updated'");
+		});
+
+		vm.ws.addEventListener("device-add", function(e) {
+			vm.devices.push(e.detail.device);
+			console.log("added device %s", e.detail.device);
+		});
 	}
 }
 </script>
