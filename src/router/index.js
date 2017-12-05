@@ -6,13 +6,64 @@ import Devices from '@/components/Devices'
 import Schedules from '@/components/Schedules'
 import PidControlers from '@/components/PidControlers'
 import DeviceDetails from '@/components/DeviceDetails'
+import ZoneDetails from '@/components/ZoneDetails'
 import Aside from '@/components/Aside'
 
 Vue.use( Router )
-let ws = new WebSocket( "ws://localhost:2801/" );
+const ws = new WebSocket( "ws://localhost:2801/" );
+ws.lm = {};
+
 ws.addEventListener( 'close', function ( event ) {
 	console.log( "WebSocket Closed", event );
 } );
+ws.addEventListener( 'message', function ( e ) {
+	let _msg = JSON.parse( e.data );
+	if ( Array.isArray( _msg ) ) {
+		switch ( _msg[ 0 ] ) {
+			case "lm-update":
+				{
+					let updated = new CustomEvent( 'lm-updated', {
+						detail: _msg[ 1 ]
+					} );
+					ws.lm = _msg[ 1 ];
+					ws.dispatchEvent( updated );
+					break;
+				}
+			case "detail":
+				{
+					let deviceDetail = new CustomEvent( 'device-detail', {
+						detail: _msg[ 1 ]
+					} );
+					ws.dispatchEvent( deviceDetail );
+					break;
+				}
+			case "lm-device-add":
+				{
+					let deviceAdd = new CustomEvent( 'device-add', {
+						detail: _msg[ 1 ]
+					} );
+					ws.lm.devices.push( _msg[ 1 ] )
+					console.log( "dispated event: deviceAdd, with detail =: ", _msg[ 1 ] );
+					ws.dispatchEvent( deviceAdd );
+					let updated = new CustomEvent( 'lm-updated', {
+						detail: ws.lm
+					} );
+					console.log( "dispated event: lm-updated" );
+					ws.dispatchEvent( updated )
+					break;
+				}
+		}
+	}
+} );
+ws.addEventListener( 'open', function () {
+	ws.send( JSON.stringify( [ "client", {
+		cmd: "load"
+	} ] ) );
+}, {
+	once: true
+} );
+
+
 
 export default new Router( {
 	routes: [ {
@@ -50,6 +101,16 @@ export default new Router( {
 		name: 'zones',
 		components: {
 			default: Zones,
+			aside: Aside
+		},
+		meta: {
+			ws: ws
+		}
+	}, {
+		path: '/zone/:zoneID',
+		name: 'zoneDetails',
+		components: {
+			default: ZoneDetails,
 			aside: Aside
 		},
 		meta: {
